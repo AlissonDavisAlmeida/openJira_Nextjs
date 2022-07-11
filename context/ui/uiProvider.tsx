@@ -18,13 +18,22 @@ export const UIProvider = ({ children }: UIProviderInterface) => {
 
     const [state, dispatch] = useReducer<Reducer<State, {type:string, payload?:any}>>(uiReducer, initialState)
 
+    const openSideBar = ()=>{
+        dispatch({type: "OPEN_DRAWER"})
+    
+    }
+
+    const closeSideBar = ()=>{
+        dispatch({type: "CLOSE_DRAWER"})
+    }
+
     const { isSideBarOpen } = state
-    const setIsSideBarOpen = dispatch
 
     return (
         <UIContext.Provider value={{
             isSideBarOpen,
-            setIsSideBarOpen
+            openSideBar,
+            closeSideBar
         }}>
             {children}
         </UIContext.Provider>

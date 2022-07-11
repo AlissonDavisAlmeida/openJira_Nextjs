@@ -11,13 +11,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
 
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <UIProvider>
+    <UIProvider>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
 
         <Component {...pageProps} />
-      </UIProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </UIProvider>
 
   )
 }

@@ -2,11 +2,9 @@ import { createContext, Dispatch } from "react";
 
 interface UIContextInterface {
     isSideBarOpen: boolean;
-    setIsSideBarOpen: Dispatch<{type:string, payload?:any}>
+    openSideBar:()=>void;
+    closeSideBar:()=>void;
 }
 
-export const UIContext = createContext<UIContextInterface>({
-    isSideBarOpen: false,
-    setIsSideBarOpen: () => {}
-});
+export const UIContext = createContext<UIContextInterface>({} as UIContextInterface);
 

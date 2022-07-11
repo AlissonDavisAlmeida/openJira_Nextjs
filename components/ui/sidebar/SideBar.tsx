@@ -11,15 +11,14 @@ const menuItems = [
 
 function SideBar() {
 
-    const { isSideBarOpen, setIsSideBarOpen } = useContext(UIContext)
+    const { isSideBarOpen, closeSideBar } = useContext(UIContext)
 
-    console.log(isSideBarOpen)
 
     return (
         <Drawer
             anchor="left"
             open={isSideBarOpen}
-            onClose={() => setIsSideBarOpen({ type: "CLOSE_DRAWER" })}
+            onClose={() => closeSideBar()}
             transitionDuration={500}
         >
             <Box sx={{ width: "250px" }}>
