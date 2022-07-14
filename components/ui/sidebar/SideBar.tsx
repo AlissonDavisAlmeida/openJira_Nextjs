@@ -16,6 +16,7 @@ function SideBar() {
 
     return (
         <Drawer
+            
             anchor="left"
             open={isSideBarOpen}
             onClose={() => closeSideBar()}
