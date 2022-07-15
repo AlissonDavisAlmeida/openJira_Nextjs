@@ -40,10 +40,22 @@ export const EntriesProvider = ({ children }: EntriesProviderProps) => {
 
     const [entries, dispatch] = useReducer(entriesReducer, initialState);
 
+    const addEntry = (description: string) => {
+        dispatch({
+            type: "ADD_ENTRY",
+            payload: {
+                id: uuid(),
+                status: "pending",
+                description,
+                createdAt: new Date(),
+            }
+        })
+    }
 
     return (
         <EntriesContext.Provider value={{
             ...entries,
+            addEntry
         }}>
             {children}
         </EntriesContext.Provider>
