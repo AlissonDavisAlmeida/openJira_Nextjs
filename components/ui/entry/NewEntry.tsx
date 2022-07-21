@@ -2,14 +2,15 @@ import { Box, Button, TextField } from "@mui/material";
 import { CancelOutlined, SaveOutlined, AddCircleOutlineOutlined } from "@mui/icons-material";
 import { useContext, useState } from "react";
 import { EntriesContext } from "../../../context/entries";
+import { UIContext } from "../../../context/ui";
 
 function NewEntry() {
 
-    const [isAdding, setIsAdding] = useState(false);
     const [inputValue, setinputValue] = useState("");
     const [isTouched, setisTouched] = useState(false);
 
     const { addEntry } = useContext(EntriesContext)
+    const {isAdding, setIsAdd} = useContext(UIContext)
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setinputValue(event.target.value);
@@ -19,7 +20,7 @@ function NewEntry() {
     const onSubmit = () => {
         if (inputValue.trim().length > 0) {
             addEntry(inputValue);
-            setIsAdding(false);
+            setIsAdd(false);
             setinputValue("");
             setisTouched(false);
         }
@@ -34,7 +35,7 @@ function NewEntry() {
                     startIcon={<AddCircleOutlineOutlined />}
                     fullWidth
                     variant="outlined"
-                    onClick={() => setIsAdding(true)}
+                    onClick={() => setIsAdd(true)}
                 >
                     Add new entry
                 </Button>
@@ -73,7 +74,7 @@ function NewEntry() {
                             variant="outlined"
                             color="secondary"
                             endIcon={<CancelOutlined />}
-                            onClick={() => setIsAdding(false)}
+                            onClick={() => setIsAdd(false)}
                         >
                             Cancel
                         </Button>

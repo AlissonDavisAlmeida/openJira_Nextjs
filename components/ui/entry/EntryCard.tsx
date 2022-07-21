@@ -1,4 +1,6 @@
 import { Card, CardActionArea, CardActions, CardContent, Typography } from "@mui/material";
+import { useContext } from "react";
+import { UIContext } from "../../../context/ui";
 import { EntryInterface } from "../../../interfaces";
 
 interface EntryCardProps {
@@ -6,11 +8,23 @@ interface EntryCardProps {
 }
 
 function EntryCard({ entry }: EntryCardProps) {
+
+
+    const { startDragging, stopDragging } = useContext(UIContext);
+
     return (
         <Card
             sx={{
                 marginBottom: 1,
 
+            }}
+            draggable
+            onDragStart={(e) => {
+                startDragging()
+                e.dataTransfer.setData("text", entry.id);
+            }}
+            onDragEnd={(e) => {
+                stopDragging()
             }}
 
         >

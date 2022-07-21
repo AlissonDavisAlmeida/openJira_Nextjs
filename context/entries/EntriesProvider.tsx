@@ -52,10 +52,18 @@ export const EntriesProvider = ({ children }: EntriesProviderProps) => {
         })
     }
 
+    const updateEntry = (entry: EntryInterface) => {
+        dispatch({
+            type: "UPDATE_ENTRY",
+            payload: entry
+        })
+    }
+
     return (
         <EntriesContext.Provider value={{
             ...entries,
-            addEntry
+            addEntry,
+            updateEntry
         }}>
             {children}
         </EntriesContext.Provider>

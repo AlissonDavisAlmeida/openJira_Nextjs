@@ -1,8 +1,10 @@
-import { Box, List } from "@mui/material";
+import { List, Paper } from "@mui/material";
 import { FC, useContext, useMemo } from "react";
 import { EntriesContext } from "../../../context/entries";
+import { UIContext } from "../../../context/ui";
 import { EntryStatusType } from "../../../interfaces";
 import EntryCard from "./EntryCard";
+import styles from "./entry.module.css"
 
 
 interface EntryListProps {
@@ -12,15 +14,41 @@ interface EntryListProps {
 
 const EntryList: FC<EntryListProps> = ({ status }) => {
 
-    const { entries } = useContext(EntriesContext);
+    const { entries, updateEntry } = useContext(EntriesContext);
+    const { isDragging, stopDragging } = useContext(UIContext);
 
     const filteredEntries = useMemo(() => entries.filter(entry => entry.status === status), [entries])
 
 
     return (
-        <div>
-            <Box sx={{ height: "calc(100vh-180px)", overflow: "none", backgroundColor: "transparent" }}>
-                <List sx={{ opacity: 1 }}>
+        <div
+            className={isDragging ? styles.dragging : ""}
+            onDrop={(e) => {
+                const id = e.dataTransfer.getData("text");
+
+                const entryToChange = entries.find(entry => entry.id === id);
+
+                if (entryToChange) {
+                    entryToChange.status = status;
+                    updateEntry(entryToChange);
+                }
+                stopDragging()
+
+            }}
+            onDragOver={(e) => {
+                e.preventDefault();
+            }}
+
+        >
+            <Paper
+                sx={{
+                    height: "calc(100vh - 64px)",
+                    overflow: "none",
+                    backgroundColor: "transparent"
+                }}
+
+            >
+                <List sx={{ opacity: isDragging ? 0.2 : 1, transition: "ease-in-out .5s" }}>
                     {filteredEntries.map(entry => {
 
                         return (
@@ -29,7 +57,7 @@ const EntryList: FC<EntryListProps> = ({ status }) => {
 
                     })}
                 </List>
-            </Box>
+            </Paper>
         </div>
     );
 }

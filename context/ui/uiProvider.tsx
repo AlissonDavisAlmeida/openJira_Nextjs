@@ -1,4 +1,4 @@
-import { Reducer, useReducer } from "react";
+import {  useReducer } from "react";
 import { UIContext, uiReducer } from "./";
 
 
@@ -8,32 +8,60 @@ interface UIProviderInterface {
 
 export interface State {
     isSideBarOpen: boolean;
+    isAdding: boolean;
+    isDragging: boolean;
 }
 
 const initialState: State = {
-    isSideBarOpen: false
+    isSideBarOpen: false,
+    isAdding: false,
+    isDragging: false
 }
 
 export const UIProvider = ({ children }: UIProviderInterface) => {
 
-    const [state, dispatch] = useReducer<Reducer<State, {type:string, payload?:any}>>(uiReducer, initialState)
+    const [state, dispatch] = useReducer(uiReducer, initialState)
 
-    const openSideBar = ()=>{
-        dispatch({type: "OPEN_DRAWER"})
-    
+    const openSideBar = () => {
+        dispatch({ type: "OPEN_DRAWER" })
+
     }
 
-    const closeSideBar = ()=>{
-        dispatch({type: "CLOSE_DRAWER"})
+    const closeSideBar = () => {
+        dispatch({ type: "CLOSE_DRAWER" })
     }
 
-    const { isSideBarOpen } = state
+    const setIsAdd = (isAdd : boolean) =>{
+        dispatch({
+            type:"IS_ADD_ENTRY",
+            payload:isAdd
+        })
+    }
+
+    const startDragging = ()=>{
+        dispatch({
+            type:"START_DRAGGING"
+        })
+    }
+
+    const stopDragging = ()=>{
+        dispatch({
+            type:"STOP_DRAGGING"
+        })
+    }
+
+    const { isSideBarOpen, isAdding, isDragging } = state
 
     return (
         <UIContext.Provider value={{
+            isDragging,
             isSideBarOpen,
+            startDragging,
+            stopDragging,
+            isAdding,
             openSideBar,
-            closeSideBar
+            closeSideBar,
+            setIsAdd
         }}>
             {children}
         </UIContext.Provider>

@@ -1,10 +1,11 @@
 import type { NextPage } from 'next'
-import { Card, CardContent, CardHeader, Grid } from '@mui/material'
+import { Card, CardHeader, Grid } from '@mui/material'
 import Layout from '../components/layouts/Layout'
 import EntryList from '../components/ui/entry/EntryList'
 import NewEntry from '../components/ui/entry/NewEntry'
 
 const Home: NextPage = () => {
+
   return (
     <>
       <Layout title='Home - OpenJira'>
@@ -17,7 +18,7 @@ const Home: NextPage = () => {
                 height: 'calc(100vh - 64px)'
               }}>
               <CardHeader title="Pending" />
-              <NewEntry/>
+              <NewEntry />
               <EntryList status='pending' />
             </Card>
           </Grid>
