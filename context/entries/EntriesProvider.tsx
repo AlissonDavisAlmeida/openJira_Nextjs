@@ -13,27 +13,7 @@ export interface State {
 }
 
 const initialState: State = {
-    entries: [
-        {
-            id: uuid(),
-            status: "pending",
-            description: "Pending: Pending task",
-            createdAt: new Date(),
-        },
-        {
-            id: uuid(),
-            status: "in-progress",
-            description: "In Progress: In progress task",
-            createdAt: new Date(),
-        },
-        {
-            id: uuid(),
-            status: "done",
-            description: "Done task",
-            createdAt: new Date(),
-        },
-        
-    ]
+    entries: [ ]
 }
 
 export const EntriesProvider = ({ children }: EntriesProviderProps) => {

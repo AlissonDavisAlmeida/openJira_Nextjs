@@ -23,10 +23,13 @@ export const connectMongoDB = async ()=>{
 
     mongoose.connect(process.env.MONGO_URI!);
     mongooConection.isConnected = 1;
-    console.log("MongoDB is connected: mongodb://localhost:27017/entriesDB");
+    console.log("MongoDB is connected: "+ process.env.MONGO_URI);
 }
 
 export const disconnectMongoDB = async ()=>{
+
+    if(process.env.NODE_ENV === "development")return
+
     if(mongooConection.isConnected === 0){
         console.log("MongoDB is not connected");
         return;

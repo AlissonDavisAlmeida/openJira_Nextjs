@@ -18,3 +18,9 @@ mongodb://localhost:27017/entriesDB
 ## Config environment variables
 
 Rename file .env(example) to .env and define your connection string
+
+## Seed url database 
+
+```
+http://localhost:3000/api/seed
+```
