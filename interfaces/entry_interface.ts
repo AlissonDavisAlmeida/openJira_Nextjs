@@ -1,4 +1,5 @@
 export interface EntryInterface {
+    _id?: string
     id: string;
     description: string;
     createdAt: Date;

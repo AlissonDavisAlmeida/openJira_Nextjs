@@ -9,13 +9,17 @@ const Home: NextPage = () => {
   return (
     <>
       <Layout title='Home - OpenJira'>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} >
 
           <Grid item xs={12} sm={4} >
             <Card sx={
               {
                 textAlign: "center",
-                height: 'calc(100vh - 64px)'
+                height: 'calc(100vh - 64px)',
+                overflow:"scroll",
+                '::-webkit-scrollbar': {
+                  display: 'none'
+                }
               }}>
               <CardHeader title="Pending" />
               <NewEntry />
@@ -27,7 +31,11 @@ const Home: NextPage = () => {
             <Card sx={
               {
                 textAlign: "center",
-                height: 'calc(100vh - 64px)'
+                height: 'calc(100vh - 64px)',
+                overflow:"scroll",
+                '::-webkit-scrollbar': {
+                  display: 'none'
+                }
               }}>
               <CardHeader title="In Progress" />
               <EntryList status='in-progress' />
@@ -39,7 +47,11 @@ const Home: NextPage = () => {
             <Card sx={
               {
                 textAlign: "center",
-                height: 'calc(100vh - 64px)'
+                height: 'calc(100vh - 64px)',
+                overflow:"scroll",
+                '::-webkit-scrollbar': {
+                  display: 'none'
+                }
               }}>
               <CardHeader title="Done" />
               <EntryList status='done' />

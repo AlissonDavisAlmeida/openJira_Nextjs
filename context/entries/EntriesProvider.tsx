@@ -1,7 +1,7 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { EntryInterface } from "../../interfaces";
 import { EntriesContext, entriesReducer } from "./";
-import {v4 as uuid} from "uuid"
+import { entriesAPI } from "../../api";
 
 
 interface EntriesProviderProps {
@@ -13,21 +13,42 @@ export interface State {
 }
 
 const initialState: State = {
-    entries: [ ]
+    entries: []
 }
 
 export const EntriesProvider = ({ children }: EntriesProviderProps) => {
 
     const [entries, dispatch] = useReducer(entriesReducer, initialState);
 
-    const addEntry = (description: string) => {
+
+    useEffect(() => {
+
+        const fetchEntries = async () => {
+
+            const entries = await entriesAPI.get("/entries")
+
+            dispatch({
+                type: "LOAD_ENTRIES",
+                payload: entries.data.map((entry: any) => ({
+                    ...entry,
+                    id: entry._id
+                }))
+            })
+        }
+
+        fetchEntries()
+    }, [])
+
+    const addEntry = async (description: string) => {
+
+        const { data } = await entriesAPI.post<EntryInterface>("/entries", { description })
+
+        
         dispatch({
             type: "ADD_ENTRY",
             payload: {
-                id: uuid(),
-                status: "pending",
-                description,
-                createdAt: new Date(),
+                ...data,
+                id: data._id!
             }
         })
     }

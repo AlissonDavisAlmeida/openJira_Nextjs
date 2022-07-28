@@ -5,12 +5,18 @@ import { State } from "./";
 type EntriesType =
     | { type: "ADD_ENTRY"; payload: EntryInterface }
     | { type: "UPDATE_ENTRY", payload: EntryInterface }
+    | { type: "LOAD_ENTRIES", payload: EntryInterface[] }
 
 
 export const entriesReducer: Reducer<State, EntriesType> = (state, action) => {
 
     switch (action.type) {
 
+        case "LOAD_ENTRIES":
+            return {
+                ...state,
+                entries: action.payload
+            }
         case "ADD_ENTRY":
             return {
                 ...state,
