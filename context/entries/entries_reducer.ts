@@ -26,11 +26,14 @@ export const entriesReducer: Reducer<State, EntriesType> = (state, action) => {
             return {
                 ...state,
                 entries: state.entries.map(entry => {
-                    if (entry.id === action.payload.id) {
+                    if (entry.id === action.payload._id) {
                         entry.status = action.payload.status;
                         entry.description = action.payload.description
                     }
-                    return entry;
+                    return {
+                        ...entry,
+                        id: entry._id!
+                    };
                 })
             }
         default:

@@ -43,7 +43,7 @@ export const EntriesProvider = ({ children }: EntriesProviderProps) => {
 
         const { data } = await entriesAPI.post<EntryInterface>("/entries", { description })
 
-        
+
         dispatch({
             type: "ADD_ENTRY",
             payload: {
@@ -53,11 +53,17 @@ export const EntriesProvider = ({ children }: EntriesProviderProps) => {
         })
     }
 
-    const updateEntry = (entry: EntryInterface) => {
-        dispatch({
-            type: "UPDATE_ENTRY",
-            payload: entry
-        })
+    const updateEntry = async ({id,description, status}: EntryInterface) => {
+        try {
+            const { data } = await entriesAPI.put(`/entries/${id}`, {description, status})
+
+            dispatch({
+                type: "UPDATE_ENTRY",
+                payload: data
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     return (
