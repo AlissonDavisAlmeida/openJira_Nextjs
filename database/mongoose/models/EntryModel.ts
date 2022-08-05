@@ -11,7 +11,7 @@ const entrySchema = new Schema({
         type: String,
         required: true
     },
-    createdAt: { type: Date },
+    createdAt: { type: Date, default: Date.now() },
     status: {
         type: String,
         enum: {

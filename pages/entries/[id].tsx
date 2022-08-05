@@ -13,10 +13,13 @@ import {
 import Layout from "../../components/layouts/Layout";
 import { DeleteOutlined, SaveOutlined } from "@mui/icons-material";
 import { EntryStatusType } from "../../interfaces";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import { getEntryById } from "../../database/dbEntries";
 import { IEntry } from "../../database/mongoose/models";
+import { EntriesContext } from "../../context/entries";
+import { useRouter } from "next/router";
+import { getFormatDistanceToNow } from "../../utils/date_functions";
 
 const validStatus: EntryStatusType[] = ["pending", "in-progress", "done"]
 
@@ -32,6 +35,10 @@ function EntryPage({ entry }: EntryCardProps) {
     const [status, setstatus] = useState<EntryStatusType>(entry.status);
     const [touched, settouched] = useState(false);
 
+    const { updateEntry } = useContext(EntriesContext);
+
+    const navigate = useRouter()
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setinputValue(event.target.value);
         settouched(true);
@@ -42,13 +49,21 @@ function EntryPage({ entry }: EntryCardProps) {
     }
 
     const onClickButton = () => {
-        console.log(inputValue, status);
+
+        updateEntry({
+            id: entry._id!,
+            description: inputValue,
+            status: status,
+            createdAt: entry.createdAt,
+        })
+
+        navigate.push("/")
     }
 
-    const isInvalid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
+    const isInvalid = useMemo(() => inputValue.trim().length <= 0 && touched, [inputValue, touched])
 
     return (
-        <Layout title={inputValue.substring(0,20) + "..."}>
+        <Layout title={inputValue.substring(0, 20) + "..."}>
             <Grid
                 container
                 justifyContent={"center"}
@@ -58,7 +73,7 @@ function EntryPage({ entry }: EntryCardProps) {
                     <Card>
                         <CardHeader
                             title={`Entry:`}
-                            subheader={`Created at last: ${entry.createdAt} minutes`}
+                            subheader={`Created at last: ${getFormatDistanceToNow(entry.createdAt)}`}
                         />
 
                         <CardContent>
@@ -106,7 +121,7 @@ function EntryPage({ entry }: EntryCardProps) {
                                 onClick={onClickButton}
                                 disabled={isInvalid}
                             >
-
+                                Save
                             </Button>
                         </CardActions>
                     </Card>

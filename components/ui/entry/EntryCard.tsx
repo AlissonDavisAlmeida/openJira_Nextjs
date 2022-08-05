@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { UIContext } from "../../../context/ui";
 import { EntryInterface } from "../../../interfaces";
+import { getFormatDistanceToNow } from "../../../utils/date_functions";
 
 interface EntryCardProps {
     entry: EntryInterface
@@ -16,7 +17,7 @@ function EntryCard({ entry }: EntryCardProps) {
 
     return (
         <Card
-            onClick={()=> navigate.push(`/entries/${entry.id}`)}
+            onClick={() => navigate.push(`/entries/${entry.id}`)}
             sx={{
                 marginBottom: 1,
 
@@ -37,7 +38,7 @@ function EntryCard({ entry }: EntryCardProps) {
                 </CardContent>
 
                 <CardActions sx={{ display: "flex", justifyContent: "flex-end", paddingRight: 2 }}>
-                    <Typography variant="body2">last 30 min</Typography>
+                    <Typography variant="body2">{getFormatDistanceToNow(entry.createdAt)}</Typography>
                 </CardActions>
             </CardActionArea>
         </Card>
